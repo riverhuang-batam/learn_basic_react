@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
+import {Button} from 'reactstrap'
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export default class App extends Component {
+    state = {
+        count: 0,
+        increment: 1,
+        imageUrl:'http://picsum.photos/200'
+    };
+    render() {
+      
+        return (
+            <div className="App">
+              <img src={this.state.imageUrl}/>
+              <h1>
+                <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
 
-export default App;
+                </h1>
+                <Button onClick={this.incrementCount()}>+</Button>
+            </div>
+        );
+    }
+  getBadgeClasses() {
+    let classes = "badge m-2 badge-";
+    classes += this.state.count === 0 ? "warning" : "primary";
+    return classes;
+  }
+
+    formatCount(){
+      const {count} = this.state;
+      return count === 0 ? "zero" : count;
+
+    }
+    incrementCount(){
+      
+      const {increment} = this.state.increment;
+      return this.state.count += increment
+    }
+}
