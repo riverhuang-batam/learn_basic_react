@@ -1,40 +1,34 @@
 import React, {Component} from 'react';
-import {Button} from 'reactstrap'
-import './App.css';
+import {Button} from 'reactstrap';
+import Counter from './Components/Counter/Counter'
+import './App.css'
 
-export default class App extends Component {
-    state = {
-        count: 0,
-        increment: 1,
-        imageUrl:'http://picsum.photos/200'
+
+export default class App extends Component{
+    state={
+      counters:[
+        {id:1, value:4},
+        {id:2, value:0},
+        {id:3, value:0},
+        {id:4, value:0}
+      ]
     };
+    deleteCount = counterId =>{
+      const counters =  this.state.counters.filter(c=> c.id !== counterId);
+      this.setState(counters)
+      console.log('event delete handler', counterId)
+    };
+
     render() {
       
         return (
-            <div className="App">
-              <img src={this.state.imageUrl}/>
-              <h1>
-                <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
-
-                </h1>
-                <Button onClick={this.incrementCount()}>+</Button>
+            <div>
+              
+              {this.state.counters.map(counter =>(
+              <Counter key={counter.id} id={counter.id} onDelete={this.deleteCount} value={counter.value}>
+              <h4>{counter.id}</h4>  
+              </Counter>))}
             </div>
         );
-    }
-  getBadgeClasses() {
-    let classes = "badge m-2 badge-";
-    classes += this.state.count === 0 ? "warning" : "primary";
-    return classes;
-  }
-
-    formatCount(){
-      const {count} = this.state;
-      return count === 0 ? "zero" : count;
-
-    }
-    incrementCount(){
-      
-      const {increment} = this.state.increment;
-      return this.state.count += increment
     }
 }
